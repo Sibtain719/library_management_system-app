@@ -40,4 +40,8 @@ Route::get('/transaction', function () {
 Route::get('/reports', function () {
     return view('layout/reports');
 });
+
+Route::get('/explore_books', function () {
+    return view('layout/explore_books');
+});
 require __DIR__.'/auth.php';

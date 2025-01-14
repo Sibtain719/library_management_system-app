@@ -26,14 +26,14 @@
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="#" class="nav-link text-white">
-                                <i class="bi bi-book"></i> Borrowed Books
+                            <a href="/explore_books" class="nav-link text-white">
+                                <i class="bi bi-book"></i> Explore Books
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="#" class="nav-link text-white">
+                            <button class="nav-link text-white" data-bs-target="#library_rules">
                                 <i class="bi bi-list-check"></i> Library Rules
-                            </a>
+                            </button>
                         </li>
                         <li class="nav-item mb-2">
                             <a href="#" class="nav-link text-white">
@@ -113,7 +113,7 @@
                 </div>
 
                 <!-- Library Rules Section -->
-                <div class="card">
+                <div class="modal fade card" id="library_rules" tabindex="-1" aria-labelledby="library_rules" aria-hidden="true">
                     <div class="card-header bg-info text-white">
                         <i class="bi bi-list-check"></i> Library Rules
                     </div>
