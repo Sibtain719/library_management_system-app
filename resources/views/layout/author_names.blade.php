@@ -94,7 +94,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="GET" id="editCategoryForm" action="update_author/{{$author->id}}">
+                    <form method="GET" id="editCategoryForm">
                         <div class="mb-3">
                             <label for="editBookCategory" class="form-label">Author Name</label>
                             <input type="text" class="form-control" id="editBookCategory" name="Author_Name" required>

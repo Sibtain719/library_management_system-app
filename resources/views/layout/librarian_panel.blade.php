@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Librarian Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -70,13 +70,10 @@
 </head>
 <body>
     <div class="sidebar">
-        <h3>Admin Panel</h3>
+        <h3>Librarian Panel</h3>
         <nav class="nav flex-column">
             <a class="nav-link active" href="#">Dashboard</a>
-            <a class="nav-link" href="/books">Books</a>
-            <a class="nav-link" href="/members">Members</a>
-            <a class="nav-link" href="transaction">Transactions</a>
-            <a class="nav-link" href="reports">Reports</a>
+            <a class="nav-link" href="/books">Add Books</a>
             <a class="nav-link" href="#">Settings</a>
             <a class="nav-link" href="#">Logout</a>
         </nav>
@@ -106,41 +103,14 @@
 
         
         <div class="container mt-4">
-            <h1>Welcome to the Admin Panel</h1>
+            <h1>Welcome to the Librarian Panel</h1>
             <div class="row">
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow">
                         <div class="card-body">
-                            <h5 class="card-title">Books</h5>
+                            <h5 class="card-title">Add Books</h5>
                             <p class="card-text">Manage the library's book inventory.</p>
                             <a href="/books" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h5 class="card-title">Manage Members</h5>
-                            <p class="card-text">Manage library members.</p>
-                            <a href="/members" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h5 class="card-title">Transactions</h5>
-                            <p class="card-text">Track book borrowing and returns.</p>
-                            <a href="/transaction" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h5 class="card-title">Reports</h5>
-                            <p class="card-text">Generate system reports.</p>
-                            <a href="/reports" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
                 </div>

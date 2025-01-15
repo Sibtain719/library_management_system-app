@@ -35,7 +35,12 @@ Route::get('/members', function () {
 Route::get('/books', function () {
     $books= new Books();
     $books= Books::all();
-    return view('layout/books_layout', compact('books'));
+    $category= new BookCategory();
+    $category= BookCategory::all();
+
+    $author= new Author();
+    $author= Author::all();
+    return view('layout/books_layout', compact('books','category','author'));
 });
 
 Route::get('/students', function () {
@@ -77,4 +82,9 @@ Route::get('delete_author/{id}',[AuthorController::class,'delete_author']);
 Route::get('delete_category/{id}',[BookCategoryController::class,'delete_category']);
 Route::get('update_category/{id}',[BookCategoryController::class,'update_category']);
 Route::get('update_author/{id}',[AuthorController::class,'update_author']);
+
+Route::get('/librarian_panel',function()
+{
+    return view('layout/librarian_panel');
+});
 require __DIR__.'/auth.php';
