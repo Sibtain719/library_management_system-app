@@ -20,9 +20,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        authors::factory()->create([
-            'id' => '1',
-            'Author_Name' => 'Sib',
-        ]);
+     
     }
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('Availibility')->nullable();
             $table->string('Borrowed_by')->nullable();
             $table->string('Actions')->nullable();
+            
 
             $table->timestamps();
         });

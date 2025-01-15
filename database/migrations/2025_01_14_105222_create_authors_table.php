@@ -16,6 +16,12 @@ return new class extends Migration
             $table->string('Author_Name')->nullable();
             $table->timestamps();
         });
+
+
+        Schema::create('authors', function (Blueprint $table) {
+            $table->string('email')->before('timestamps');
+           
+        });
     }
 
     /**
