@@ -2,6 +2,13 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController; 
+use App\Http\Controllers\AuthorController; 
+use App\Http\Controllers\BookCategoryController; 
+use App\Models\Books;
+use App\Models\Author;
+use App\Models\BookCategory;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,7 +33,9 @@ Route::get('/members', function () {
 });
 
 Route::get('/books', function () {
-    return view('layout/books_layout');
+    $books= new Books();
+    $books= Books::all();
+    return view('layout/books_layout', compact('books'));
 });
 
 Route::get('/students', function () {
@@ -42,6 +51,30 @@ Route::get('/reports', function () {
 });
 
 Route::get('/explore_books', function () {
-    return view('layout/explore_books');
+    $books= new Books();
+    $books= Books::all();
+    return view('layout/explore_books', compact('books'));
 });
+
+Route::get('/addBook',[AdminController::class,'addBooks']);
+
+Route::get('/author_names', function () {
+    $author= new Author();
+    $author= Author::all();
+    return view('layout/author_names',compact('author'));
+});
+
+
+Route::get('/book_category', function () {
+    $category= new BookCategory();
+    $category = BookCategory::all();
+    return view('layout/book_category',compact('category'));
+});
+
+Route::post('/add_author',[AuthorController::class,'addAuthor']);
+Route::post('/add_category',[BookCategoryController::class,'addBookCategory']);
+Route::get('delete_author/{id}',[AuthorController::class,'delete_author']);
+Route::get('delete_category/{id}',[BookCategoryController::class,'delete_category']);
+Route::get('update_category/{id}',[BookCategoryController::class,'update_category']);
+Route::get('update_author/{id}',[AuthorController::class,'update_author']);
 require __DIR__.'/auth.php';

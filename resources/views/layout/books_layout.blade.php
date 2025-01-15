@@ -42,18 +42,20 @@
                         <th>Borrowed By</th>
                         <th>Actions</th>
                     </tr>
+                    
                 </thead>
+                @foreach($books as $books)
                 <tbody>
                     <!-- Sample Data -->
                     <tr>
-                        <td>1</td>
-                        <td>The Great Gatsby</td>
-                        <td>F. Scott Fitzgerald</td>
-                        <td></td>
-                        <td>Fiction</td>
-                        <td>1925</td>
-                        <td><span class="badge bg-success">Available</span></td>
-                        <td></td>
+                        <td>{{$books->id}}</td>
+                        <td>{{$books->Title}}</td>
+                        <td>{{$books->Author}}</td>
+                        <td>{{$books->No_of_copies}}</td>
+                        <td>{{$books->Category}}</td>
+                        <td>{{$books->Published_date}}</td>
+                        <td><span class="badge bg-success">{{$books->Availibility}}</span></td>
+                        <td>{{$books->Borrowed_by}}</td>
                         <td>
                             <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editBookModal">
                                 <i class="bi bi-pencil-square"></i> Edit
@@ -65,6 +67,7 @@
                     </tr>
                    
                 </tbody>
+              @endforeach
             </table>
         </div>
     </div>
@@ -78,7 +81,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="#">
+                    <form action="/addBook" method="GET" >
                         <div class="mb-3">
                             <label for="bookTitle" class="form-label">Title</label>
                             <input type="text" class="form-control" id="bookTitle" name="title" required>
@@ -89,7 +92,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="No_of_copies" class="form-label">No of Copies</label>
-                            <input type="text" class="form-control" id="No_of_copies" name="No_of_copies" required>
+                            <input type="text" class="form-control" id="No_of_copies" name="no_of_copies" required>
                         </div>
 
                         <div class="mb-3">
