@@ -1,3 +1,11 @@
+<?php 
+
+use App\Models\Author;
+use App\Models\BookCategory;
+
+$bookCategory=BookCategory::all();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,13 +56,29 @@
                 </thead>
                 @foreach($books as $books)
                 <tbody>
-                    <!-- Sample Data -->
+                  
                     <tr>
                         <td>{{$books->id}}</td>
                         <td>{{$books->Title}}</td>
-                        <td>{{$books->Author}}</td>
+                        <td><?php
+                        $author_id = $books->author_id;
+                       
+                         $authorModel=Author::find($author_id);
+                    
+                         if(!empty($authorModel)){
+                            echo $authorModel['Author_Name'];
+                         } 
+                      
+                        ?></td>
                         <td>{{$books->No_of_copies}}</td>
-                        <td>{{$books->Category}}</td>
+                        <td><?php
+                            $category_id = $books->category_id;
+                            BookCategory::all();
+                             $category=BookCategory::find($category_id);
+                             if(!empty($category)){
+                                echo $category['Category'];
+                             }   
+                            ?></td>
                         <td>{{$books->Published_date}}</td>
                         <td><span class="badge bg-success">{{$books->Availibility}}</span></td>
                         <td>{{$books->Borrowed_by}}</td>
@@ -93,10 +117,10 @@
                                 <label for="bookAuthor" class="form-label">Select Author</label>
                               <br>
                               
-                                <select select class="form-select" aria-label="Default select example">
+                                <select name="author" select class="form-select" aria-label="Default select example">
                                     <option selected>Select Author</option>  
                                     @foreach($author as $author)  
-                                 <option value="{{$author->Author_Name}}"> {{$author->Author_Name}}</option>
+                                 <option value="{{$author->id}}"  class="form-control"> {{$author->Author_Name}}</option>
                                  @endforeach
                                 </select>
                                 
@@ -111,10 +135,10 @@
                         <div class="mb-3">
                             <label for="bookCategory" class="form-label">Category</label>
                             <br>
-                            <select select class="form-select" aria-label="Default select example">
+                            <select name="category" select class="form-select" aria-label="Default select example">
                                 <option selected>Select Category</option>  
-                                @foreach($category as $category)  
-                             <option value="{{$category->Category}}"> {{$category->Category}}</option>
+                                @foreach($bookCategory as $bookCategory)  
+                             <option value="{{$bookCategory->id}}"  class="form-control"> {{$bookCategory->Category}}</option>
                              @endforeach
                             </select>
                         </div>
@@ -160,8 +184,14 @@
                             <input type="text" class="form-control" id="editBookAuthor" name="author" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editBookCategory" class="form-label">Category</label>
-                            <input type="text" class="form-control" id="editBookCategory" name="category" required>
+                            <label for="bookCategory" class="form-label">Category</label>
+                            <br>
+                            <select name="category" select class="form-select" aria-label="Default select example">
+                                <option selected>Select Category</option>  
+                                @foreach($bookCategory as $bookCategory)  
+                             <option value="{{$bookCategory->id}}"  class="form-control"> {{$bookCategory->Category}}</option>
+                             @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="editBookPublishedDate" class="form-label">Published Date</label>
