@@ -4,6 +4,9 @@ use App\Models\Author;
 use App\Models\BookCategory;
 
 $bookCategory=BookCategory::all();
+$bookCategory1=BookCategory::all();
+
+$author1= Author::all();
 ?>
 
 <!DOCTYPE html>
@@ -80,15 +83,23 @@ $bookCategory=BookCategory::all();
                              }   
                             ?></td>
                         <td>{{$books->Published_date}}</td>
-                        <td><span class="badge bg-success">{{$books->Availibility}}</span></td>
+                        <td><span class="badge bg-success">{{$books->Availability}}</span></td>
                         <td>{{$books->Borrowed_by}}</td>
                         <td>
-                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editBookModal">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </button>
-                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteBookModal">
-                                <i class="bi bi-trash"></i> Delete
-                            </button>
+                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" 
+                            data-bs-target="#editBookModal" 
+                            data-id="{{ $books->id }}" 
+                            data-name="{{ $books }}">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </button>
+
+                    
+                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" 
+                            data-bs-target="#deleteBookModal" 
+                            data-id="{{ $books->id }}" 
+                            data-name="{{ $books }}">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
                         </td>
                     </tr>
                    
@@ -174,32 +185,45 @@ $bookCategory=BookCategory::all();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="#">
+                    <form method="GET" id="editCategoryForm" action="/update_books/{{$books->id}}">
+                       
                         <div class="mb-3">
                             <label for="editBookTitle" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="editBookTitle" name="title" required>
+                            <input type="text" class="form-control" id="editBookTitle" name="Title" required>
                         </div>
                         <div class="mb-3">
                             <label for="editBookAuthor" class="form-label">Author</label>
-                            <input type="text" class="form-control" id="editBookAuthor" name="author" required>
+                            <br>
+                              
+                                <select name="author_id" select class="form-select" aria-label="Default select example">
+                                    <option selected>Select Author</option>  
+                                    @foreach($author1 as $author1)  
+                                 <option value="{{$author1->id}}"  class="form-control"> {{$author1->Author_Name}}</option>
+                                 @endforeach
+                                </select>
                         </div>
                         <div class="mb-3">
                             <label for="bookCategory" class="form-label">Category</label>
                             <br>
-                            <select name="category" select class="form-select" aria-label="Default select example">
+                            <select name="category_id" select class="form-select" aria-label="Default select example">
                                 <option selected>Select Category</option>  
-                                @foreach($bookCategory as $bookCategory)  
-                             <option value="{{$bookCategory->id}}"  class="form-control"> {{$bookCategory->Category}}</option>
+                                @foreach($bookCategory1 as $bookCategory1)  
+                             <option value="{{$bookCategory1->id}}"  class="form-control"> {{$bookCategory1->Category}}</option>
                              @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="editBookPublishedDate" class="form-label">Published Date</label>
-                            <input type="date" class="form-control" id="editBookPublishedDate" name="published_date" required>
+                            <input type="date" class="form-control" id="editBookPublishedDate" name="Published_date" required>
                         </div>
                         <div class="mb-3">
+                            <label for="borrowedBy" class="form-label">Borrowed By</label>
+                            <input type="text" class="form-control" id="borrowedBy" name="Borrowed_by" required>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="editBookAvailability" class="form-label">Availability</label>
-                            <select class="form-select" id="editBookAvailability" name="availability" required>
+                            <select class="form-select" id="editBookAvailability" name="Availability" required>
                                 <option value="available">Available</option>
                                 <option value="unavailable">Unavailable</option>
                             </select>
@@ -223,7 +247,7 @@ $bookCategory=BookCategory::all();
                     Are you sure you want to delete this book?
                 </div>
                 <div class="modal-footer">
-                    <form method="POST" action="#">
+                    <form method="GET" id="deleteCategoryForm" action="/delete_books/{{$books->id}}" >
                         <button type="submit" class="btn btn-danger">Yes, Delete</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -234,6 +258,30 @@ $bookCategory=BookCategory::all();
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      
+        const editBookModal = document.getElementById('editBookModal');
+        editBookModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const form = document.getElementById('editCategoryForm');
+            form.action = `update_books/${id}`;
+            document.getElementById('editBookCategory').value = name;
+        });
+
+        const deleteBookModal = document.getElementById('deleteBookModal');
+        deleteBookModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const form = document.getElementById('deleteCategoryForm');
+            form.action = `delete_books/${id}`;
+            document.getElementById('deleteCategoryName').textContent = `Are you sure you want to delete category: ${name}?`;
+        });
+    </script>
+
 </body>
 
 </html>

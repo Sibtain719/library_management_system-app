@@ -73,12 +73,11 @@
         <h3>Admin Panel</h3>
         <nav class="nav flex-column">
             <a class="nav-link active" href="#">Dashboard</a>
-            <a class="nav-link" href="/books">Books</a>
-            <a class="nav-link" href="/members">Members</a>
-            <a class="nav-link" href="transaction">Transactions</a>
-            <a class="nav-link" href="reports">Reports</a>
+            <a class="nav-link" href="/book_category">Add Books Category</a>
+            <a class="nav-link" href="/members">Add Members</a>
+            <a class="nav-link" href="/author_names">Add Authors</a>
             <a class="nav-link" href="#">Settings</a>
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" href="/login">Logout</a>
         </nav>
     </div>
 
@@ -111,12 +110,24 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow">
                         <div class="card-body">
-                            <h5 class="card-title">Books</h5>
-                            <p class="card-text">Manage the library's book inventory.</p>
-                            <a href="/books" class="btn btn-primary">View Details</a>
+                            <h5 class="card-title">Add Books Category</h5>
+                            <p class="card-text ">Different book Categories.</p>
+                            <a href="/book_category" class="btn btn-primary">Add Categories</a>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Author's</h5>
+                            <p class="card-text ">Author's of Books</p>
+                            <a href="/author_names" class="btn btn-primary">Add Author's</a>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow">
                         <div class="card-body">
@@ -126,24 +137,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4">
+                {{-- <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow">
                         <div class="card-body">
                             <h5 class="card-title">Transactions</h5>
-                            <p class="card-text">Track book borrowing and returns.</p>
+                            <p class="card-text">Track borrowing and returns.</p>
                             <a href="/transaction" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h5 class="card-title">Reports</h5>
-                            <p class="card-text">Generate system reports.</p>
-                            <a href="/reports" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
+                </div> --}}
+                
             </div>
         </div>
     </div>

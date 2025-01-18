@@ -4,77 +4,71 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Books;
+use App\Models\Librarian;
+use App\Models\User;
+use App\Models\Students;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    function addBooks(Request $request)
-    {   //dd('route');
+  
 
-        //dd($request->input('category'));
-        $books= new Books();
-        $books->Title=$request->input('title');
-        $books->author_id=$request->input('author');
-        $books->No_of_copies=$request->input('no_of_copies');
-        $books->category_id=$request->input('category');
-        $books->Published_date=$request->input('published_date');
-        $books->Availibility=$request->input('availability');
-        $books->Borrowed_by=$request->input('borrowed_by');
-       // $books= Books::create('Actions'->$request->input('title'));
-       //dd($books);
-       $books->save();
-       return redirect('/books');
-        
+    function addMember(Request $request)
+    {
+        // $librarian= new Librarian();
+        // $librarian->Username= $request->input('name');
+        // $librarian->Email= $request->input('email');
+        // $librarian->Password= $request->input('password');
 
+        // $librarian->save();
+        //dd($request->role);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'role' => $request->role, 
+        ]);
+
+        // if($request->role=='librarian')
+        // {
+        //     Librarian::create([
+        //         'Username' => $request->name,
+        //         'Email' => $request->email,
+        //         'Password' => Hash::make($request->password),
+               
+        //     ]);
+        // }
+        // if($request->role=='student')
+        // {
+        //     Students::create([
+        //         'Name' => $request->name,
+        //         'Email' => $request->email,
+        //         'Password' => Hash::make($request->password),
+               
+        //     ]);
+        // }
+     
+
+        return redirect('/members');
+    }
+
+
+    function delete_member(Request $request,$id)
+    {
+        User::find($id);
+        User::destroy($id);
+        return redirect('/members');
+       
 
     }
 
-    function addMembers(Request $request)
+    function update_member(Request $request,$id)
     {
 
-    }
-
-    function deleteBooks(Request $request)
-    {
-
-    }
-    function editBooks(Request $request)
-    {
-
+        User::where('id',$id)->update($request->all());
+        return redirect('/members');
+       
     }
 
 
-    function deleteMembers(Request $request)
-    {
-
-    }
-
-    function transactions(Request $request)
-    {
-
-    }
-
-    function addNewTransaction(Request $request)
-    {
-
-    }
-
-    function deleteTransactions(Request $request)
-    {
-
-    }
-
-    function editTransactions(Request $request)
-    {
-
-    }
-
-    function viewReports(Request $request)
-    {
-
-    }
-
-    function generateRreports(Request $request)
-    {
-
-    }
 }

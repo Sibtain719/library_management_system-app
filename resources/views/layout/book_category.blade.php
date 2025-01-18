@@ -131,6 +131,7 @@
         editBookModal.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;
             const id = button.getAttribute('data-id');
+            console.log(id);
             const name = button.getAttribute('data-name');
             const form = document.getElementById('editCategoryForm');
             form.action = `update_category/${id}`;

@@ -75,7 +75,7 @@
             <a class="nav-link active" href="#">Dashboard</a>
             <a class="nav-link" href="/books">Add Books</a>
             <a class="nav-link" href="#">Settings</a>
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" href="login">Logout</a>
         </nav>
     </div>
 
@@ -108,9 +108,9 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card shadow">
                         <div class="card-body">
-                            <h5 class="card-title">Add Books</h5>
-                            <p class="card-text">Manage the library's book inventory.</p>
-                            <a href="/books" class="btn btn-primary">View Details</a>
+                            <h5 class="card-title">Add Books Here</h5>
+                            <p class="card-text">Manage Books of library.</p>
+                            <a href="/books" class="btn btn-primary">Add Books</a>
                         </div>
                     </div>
                 </div>
