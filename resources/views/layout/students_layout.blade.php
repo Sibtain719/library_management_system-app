@@ -35,7 +35,7 @@ $user= User::all();
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="/explore_books" class="nav-link text-white">
+                            <a href="/explore_books/{{$student->id}}" class="nav-link text-white">
                                 <i class="bi bi-book"></i> Explore Books
                             </a>
                         </li>

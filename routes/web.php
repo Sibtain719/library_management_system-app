@@ -9,6 +9,7 @@ use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\Auth\LibraryAuthController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BooksController;
 use App\Models\Books;
 use App\Models\Author;
 use App\Models\BookCategory;
@@ -59,11 +60,7 @@ Route::get('/reports', function () {
     return view('layout/reports');
 });
 
-Route::get('/explore_books', function () {
-    $books= new Books();
-    $books= Books::all();
-    return view('layout/explore_books', compact('books'));
-});
+Route::get('/explore_books/{id}',[StudentController::class,'explore_books']);
 
 Route::get('/addBook',[LibrarianController::class,'addBooks']);
 
@@ -131,12 +128,16 @@ Route::group(['middleware' => ['role:librarian']], function () {
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/new_student', [StudentController::class, 'register']);
 
-Route::get('/addtocart/{id}',[StudentController::class,'addcart']);
-
-Route::get('/add_to_cart', function(){
-
+Route::get('/add_to_cart',function()
+{
+    
     return View('layout/add_to_cart');
 });
+
+// Route::get('/add_to_cart', function(){
+
+//     return View('layout/add_to_cart');
+// });
 
 
 require __DIR__.'/auth.php';

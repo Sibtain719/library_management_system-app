@@ -1,15 +1,12 @@
-
 <?php 
 
 use App\Models\Author;
 use App\Models\BookCategory;
 use App\Models\Books;
 
-$books= Books::all();
-$books1= Books::all()
+$books = Books::all();
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,9 +34,8 @@ $books1= Books::all()
             </form>
         </div>
 
-       
         <div class="table-responsive">
-            <table class="table table-striped table-hover " style="text-align:center">
+            <table class="table table-striped table-hover text-center">
                 <thead class="table-dark">
                     <tr>
                         <th>Id</th>
@@ -52,53 +48,35 @@ $books1= Books::all()
                         <th>Actions</th>
                     </tr>
                 </thead>
-                @foreach($books as $books)
-
                 <tbody id="booksTable">
+                    @foreach($books as $book)
                     <tr>
-                        <td>{{$books->id}}</td>
-                        <td>{{$books->Title}}</td>
-                        <td><?php
-                            $author_id = $books->author_id;
-                           
-                             $authorModel=Author::find($author_id);
-                        
-                             if(!empty($authorModel)){
-                                echo $authorModel['Author_Name'];
-                             } 
-                          
-                            ?></td>
-                        <td><?php
-                            $category_id = $books->category_id;
-                            BookCategory::all();
-                             $category=BookCategory::find($category_id);
-                             if(!empty($category)){
-                                echo $category['Category'];
-                             }   
-                            ?></td>
-                        <td>{{$books->Published_date}}</td>
-                        <td>{{$books->No_of_copies}}</td>
-                        <td><span class="badge bg-success"></span>{{$books->Availability}}</td>
+                        <td>{{ $book->id }}</td>
+                        <td>{{ $book->Title }}</td>
+                        <td>{{ Author::find($book->author_id)->Author_Name }}</td>
+                        <td>{{ BookCategory::find($book->category_id)->Category }}</td>
+                        <td>{{ $book->Published_date }}</td>
+                        <td>{{ $book->No_of_copies }}</td>
                         <td>
-                            <a href="/add_to_cart">
-                                <button class="btn btn-sm btn-warning ">
-                                    <i class="bi bi-cart"></i> Add to Cart
-                            </a>
-                           
+                            <span class="badge {{ $book->No_of_copies > 0 ? 'bg-success' : 'bg-danger' }}">
+                                {{ $book->No_of_copies <= 0 ? 'Unavailable' : 'Available' }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-warning add-to-cart" data-id="{{ $book->id }}" data-title="{{ $book->Title }}">
+                                <i class="bi bi-cart"></i> Add to Cart
                             </button>
-                            
-{{--                                   
-                            <a href="/students" class="btn btn-sm btn-danger checkout">
-                                <i class="bi bi-trash"></i> Check Out
-                            </a> --}}
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
-                @endforeach
             </table>
+            <br>
+            <button id="proceedToCart" class="btn btn-sm btn-primary">
+                <i class="bi bi-arrow-right-circle"></i> Proceed to Cart
+            </button>
         </div>
     </div>
-
 
     <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -108,11 +86,7 @@ $books1= Books::all()
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    The book has been added to your cart!
-                    <?
-                    return redirect('/explore_books');
-                    ?>
-                    
+                    The book has been added to your cart successfully!
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -121,47 +95,42 @@ $books1= Books::all()
         </div>
     </div>
 
- 
-    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="checkoutModalLabel">Checkout Confirmation</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    You have successfully checked out the book!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- JavaScript for Button Functionality -->
     <script>
+        const cart = {};
+
         document.addEventListener('DOMContentLoaded', () => {
-          
+            // Handle Add to Cart button
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', () => {
+                    const bookId = button.dataset.id;
+                    const bookTitle = button.dataset.title;
+
+                    if (cart[bookId]) {
+                        cart[bookId].quantity += 1;
+                    } else {
+                        cart[bookId] = { id: bookId, title: bookTitle, quantity: 1 };
+                    }
+
+                    sessionStorage.setItem('cart', JSON.stringify(cart));
+
                     const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
                     cartModal.show();
                 });
             });
 
-            // Handle Checkout
-            document.querySelectorAll('.checkout').forEach(button => {
-                button.addEventListener('click', () => {
-                    // Show modal or perform AJAX request
-                    const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
-                    checkoutModal.show();
-                });
+            document.getElementById('proceedToCart').addEventListener('click', () => {
+                const cartData = sessionStorage.getItem('cart');
+                if (!cartData) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                
+                window.location.href = `/add_to_cart?cart=${encodeURIComponent(cartData)}`;
             });
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

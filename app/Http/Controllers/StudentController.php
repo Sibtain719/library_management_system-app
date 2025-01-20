@@ -35,11 +35,26 @@ class StudentController extends Controller
         return redirect('/login')->with('success', 'Registration successful. Please log in.');
     }
 
-    function addcart($id)
-    {
-        $book= Books::find($id);
-        $book->decrement('No_of_copies',1);
+    // function addcart($id)
+    // {
+    //     $book= Books::find($id);
+    //     $book->decrement('No_of_copies',1);
 
-        return redirect('/explore_books');
+    //     return redirect('/explore_books');
+    // }
+
+    function explore_books($id)
+    {
+        //dd($id);
+        return view('layout/explore_books', compact('id'));
     }
+
+    public function addToCart(Request $request)
+{
+    $books = $request->input('books');
+
+    // Process the books data as needed
+    return view('cart_page', compact('books'));
+}
+
 }
